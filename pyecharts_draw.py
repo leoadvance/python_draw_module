@@ -76,9 +76,9 @@ class PyechartsDraw:
                         opts.MarkPointItem(type_="max", symbol_size=60),
                     ]
                 ),
+
+
             )
-        # c.set_global_opts(yaxis_opts = opts.AxisOpts(
-        #             name = "价格（元）"))
         return c
 
     @classmethod
@@ -97,18 +97,24 @@ class PyechartsDraw:
             .add_xaxis(xaxis_data)
             .set_series_opts(label_opts=opts.LabelOpts(is_show=True))
             .set_global_opts(
-                title_opts=opts.TitleOpts(title=title, pos_left="0%"),
+                title_opts=opts.TitleOpts(title=title, pos_left="5%"),
                 toolbox_opts=opts.ToolboxOpts(),  # 显示工具箱
                 tooltip_opts=opts.TooltipOpts(is_show=True),
                 axispointer_opts=opts.AxisPointerOpts(
                     is_show=True, type_="none"
                 ),  # 指针移动时显示所有数值
+                # 配置图列
                 legend_opts=opts.LegendOpts(
                     is_show=True,
-                    selected_mode="multiple",
+                    # is_show=False,
+                    selected_mode="multiple",# 支持多选
+                    pos_left="10%",          # 图列距离容器左侧百分比
+                    # type_='scroll',          # 支持滚动查看到图列
+                    # align = "left",
                     # pos_bottom="0%",
-                    # pos_right="0%",
-                    # orient="vertical",
+                    pos_right="70%",
+                    orient="horizontal",
+
                 ),  # 显示图例说明
                 datazoom_opts=[
                     opts.DataZoomOpts(
@@ -124,7 +130,12 @@ class PyechartsDraw:
         # 遍历dataframe 依次添加数据到y轴
         column_list = yaxis_data.columns.tolist()
         for column in column_list:
-            c.add_yaxis(column, yaxis_data[column].tolist())
+            c.add_yaxis(
+                        column,
+                        yaxis_data[column].tolist(),
+                        symbol_size=10,
+                        label_opts=opts.LabelOpts(is_show=False),
+                        )
         return c
 
     @classmethod
