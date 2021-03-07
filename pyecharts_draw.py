@@ -137,15 +137,24 @@ class PyechartsDraw:
                 ],  # 增加缩放配置横纵轴都支持缩放
             )
         )
-        # 遍历dataframe 依次添加数据到y轴
-        column_list = yaxis_data.columns.tolist()
-        for column in column_list:
+        # 增加对1维数据的兼容
+        if len(yaxis_data.shape) == 2:
+            # 遍历dataframe 依次添加数据到y轴
+            column_list = yaxis_data.columns.tolist()
+            for column in column_list:
+                c.add_yaxis(
+                            column,
+                            yaxis_data[column].tolist(),
+                            # symbol_size=10,
+                            label_opts=opts.LabelOpts(is_show=False),
+                            )
+        else:
             c.add_yaxis(
-                        column,
-                        yaxis_data[column].tolist(),
-                        symbol_size=10,
-                        label_opts=opts.LabelOpts(is_show=False),
-                        )
+                yaxis_data.name,
+                yaxis_data.tolist(),
+                # symbol_size=10,
+                label_opts=opts.LabelOpts(is_show=False),
+            )
         return c
 
     @classmethod
