@@ -97,9 +97,16 @@ class PyechartsDraw:
             .add_xaxis(xaxis_data)
             .set_series_opts(label_opts=opts.LabelOpts(is_show=True))
             .set_global_opts(
-                title_opts=opts.TitleOpts(title=title, pos_left="5%"),
-                toolbox_opts=opts.ToolboxOpts(),  # 显示工具箱
-                tooltip_opts=opts.TooltipOpts(is_show=True),
+                title_opts=opts.TitleOpts(title=title),
+
+                # 工具箱配置
+                toolbox_opts=opts.ToolboxOpts(
+                    is_show=True,
+                    orient="vertical",      # 纵向排列
+                    pos_left = None,
+                    pos_top="5%",
+                    pos_right="5%",
+                ),
                 axispointer_opts=opts.AxisPointerOpts(
                     is_show=True, type_="none"
                 ),  # 指针移动时显示所有数值
@@ -108,11 +115,11 @@ class PyechartsDraw:
                     is_show=True,
                     # is_show=False,
                     selected_mode="multiple",# 支持多选
-                    pos_left="10%",          # 图列距离容器左侧百分比
+                    # pos_left="5%",          # 图列距离容器左侧百分比
+                    pos_top="5%",  # 图列距离容器左侧百分比
                     # type_='scroll',          # 支持滚动查看到图列
                     # align = "left",
                     # pos_bottom="0%",
-                    pos_right="70%",
                     orient="horizontal",
 
                 ),  # 显示图例说明
@@ -122,8 +129,11 @@ class PyechartsDraw:
                         range_end=100,
                         orient="vertical",
                         pos_left=DATAZOOM_VERTICAL_POS_LEFT,
+                        pos_top="20%", pos_bottom="30%"
+
+
                     ),
-                    opts.DataZoomOpts(range_start=0, range_end=100, orient="horizontal"),
+                    opts.DataZoomOpts(range_start=0, range_end=100, orient="horizontal",pos_left="20%",pos_right="30%"),
                 ],  # 增加缩放配置横纵轴都支持缩放
             )
         )
